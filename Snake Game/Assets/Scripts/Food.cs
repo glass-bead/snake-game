@@ -8,7 +8,7 @@ public class Food : MonoBehaviour
 {
     [SerializeField] GameObject snake;
     
-    private readonly int width = 30, height = 11;
+    private readonly int width = 24, height = 11;
     
     // Start is called before the first frame update
     void Start()

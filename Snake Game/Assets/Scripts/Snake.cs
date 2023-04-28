@@ -14,9 +14,6 @@ public class Snake : MonoBehaviour
     void Start()
     {
         movement = Vector2.right;
-
-        // Add Snake head to the begging of Tail list
-        //tail.Add(gameObject.transform);
     }
 
     // Update is called once per frame
@@ -27,8 +24,8 @@ public class Snake : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
         UpdateTail();
+        Move();
     }
 
     private void HandleUserInputs()
@@ -61,10 +58,10 @@ public class Snake : MonoBehaviour
 
     private void Move()
     {
-        float roundPosX = Mathf.Round(transform.position.x);
-        float roundPosY = Mathf.Round(transform.position.y);
+        float x = Mathf.Round(transform.position.x) + movement.x;
+        float y = Mathf.Round(transform.position.y) + movement.y;
 
-        transform.position = new Vector2(roundPosX + movement.x, roundPosY + movement.y);
+        transform.position = new Vector2(x, y);
     }
 
     private void UpdateTail()
@@ -83,7 +80,15 @@ public class Snake : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        GrowTail();
+        if (other.CompareTag("Food"))
+        {
+            GrowTail();
+        }
+        
+        if (other.CompareTag("Wall") || other.CompareTag("Tail"))
+        {
+            Debug.Log("GameOver()");
+        }
     }
 
 }
