@@ -13,7 +13,7 @@ public class Snake : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        movement = Vector2.right;
     }
 
     // Update is called once per frame
@@ -29,18 +29,31 @@ public class Snake : MonoBehaviour
 
     private void HandleUserInputs()
     {
-        float XAxis = Input.GetAxisRaw("Horizontal");
-        float YAxis = Input.GetAxisRaw("Vertical");
+        Debug.Log(movement);
 
         // Only allow turning up or down while moving in the x-axis
-        if (XAxis != 0f)
+        if (movement.x != 0f)
         {
-            movement = Vector2.right * XAxis;
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                movement = Vector2.up;
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                movement = Vector2.down;
+            }
         }
         // Only allow turning left or right while moving in the y-axis
-        if (YAxis != 0f)
+        else if (movement.y != 0f)
         {
-            movement = Vector2.up * YAxis;
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                movement = Vector2.left;
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                movement = Vector2.right;
+            }
         }
     }
 

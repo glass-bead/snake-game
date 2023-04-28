@@ -6,6 +6,8 @@ using Random = UnityEngine.Random;
 
 public class Food : MonoBehaviour
 {
+    [SerializeField] GameObject snake;
+    
     private readonly int width = 30, height = 11;
     
     // Start is called before the first frame update
@@ -16,7 +18,20 @@ public class Food : MonoBehaviour
 
     private void RespawnFood()
     {
-        var position = new Vector2(Mathf.RoundToInt(Random.Range(-width, width)), Mathf.RoundToInt(Random.Range(-height, height)));
-        transform.position = position;
+        var position = new Vector3(Mathf.RoundToInt(Random.Range(-width, width)), Mathf.RoundToInt(Random.Range(-height, height)), 0f);
+
+        if (position == snake.transform.position)
+        {
+            RespawnFood();
+        }
+        else
+        {
+            transform.position = position;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        RespawnFood();
     }
 }
