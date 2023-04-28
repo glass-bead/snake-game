@@ -5,15 +5,18 @@ using UnityEngine;
 
 public class Snake : MonoBehaviour
 {
-    //[SerializeField] Rigidbody2D rBody;
-    
+    [SerializeField] List<Transform> tail = new List<Transform>();
+    [SerializeField] GameObject tailPrefab;
+
     private Vector2 movement;
 
-    
     // Start is called before the first frame update
     void Start()
     {
         movement = Vector2.right;
+
+        // Add Snake head to the begging of Tail list
+        //tail.Add(gameObject.transform);
     }
 
     // Update is called once per frame
@@ -25,12 +28,11 @@ public class Snake : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        UpdateTail();
     }
 
     private void HandleUserInputs()
     {
-        Debug.Log(movement);
-
         // Only allow turning up or down while moving in the x-axis
         if (movement.x != 0f)
         {
@@ -64,4 +66,24 @@ public class Snake : MonoBehaviour
 
         transform.position = new Vector2(roundPosX + movement.x, roundPosY + movement.y);
     }
+
+    private void UpdateTail()
+    {
+        for (int t = tail.Count - 1; t > 0; t--)
+        {
+            tail[t].position = tail[t - 1].position;
+        }
+    }
+
+    private void GrowTail()
+    {
+        Transform newTail = Instantiate(tailPrefab, new Vector2(50f, 50f), Quaternion.identity).transform;
+        tail.Add(newTail);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        GrowTail();
+    }
+
 }
