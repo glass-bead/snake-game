@@ -9,6 +9,7 @@ public class Snake : MonoBehaviour
     [SerializeField] GameObject tailPrefab;
 
     private Vector2 movement;
+    private bool gameover = false;
 
     // Start is called before the first frame update
     void Start()
@@ -24,8 +25,11 @@ public class Snake : MonoBehaviour
 
     private void FixedUpdate()
     {
-        UpdateTail();
-        Move();
+        if (gameover == false)
+        {
+            UpdateTail();
+            Move();
+        } 
     }
 
     private void HandleUserInputs()
@@ -78,6 +82,11 @@ public class Snake : MonoBehaviour
         tail.Add(newTail);
     }
 
+    private void Stop()
+    {
+        gameover = true;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Food"))
@@ -87,6 +96,7 @@ public class Snake : MonoBehaviour
         
         if (other.CompareTag("Wall") || other.CompareTag("Tail"))
         {
+            Stop();
             Debug.Log("GameOver()");
         }
     }
