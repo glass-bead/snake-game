@@ -7,6 +7,7 @@ public class Snake : MonoBehaviour
 {
     [SerializeField] List<Transform> tail = new List<Transform>();
     [SerializeField] GameObject tailPrefab;
+    [SerializeField] ScoreBoard scoreboard;
 
     private Vector2 movement;
     private bool gameover = false;
@@ -78,6 +79,7 @@ public class Snake : MonoBehaviour
 
     private void GrowTail()
     {
+        scoreboard.UpdateScore(1);
         Transform newTail = Instantiate(tailPrefab, new Vector2(50f, 50f), Quaternion.identity).transform;
         tail.Add(newTail);
     }
@@ -85,6 +87,7 @@ public class Snake : MonoBehaviour
     private void Stop()
     {
         gameover = true;
+        scoreboard.UpdateHighScore();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
