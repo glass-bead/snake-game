@@ -8,6 +8,7 @@ public class Snake : MonoBehaviour
     [SerializeField] List<Transform> tail = new List<Transform>();
     [SerializeField] GameObject tailPrefab;
     [SerializeField] ScoreBoard scoreboard;
+    [SerializeField] GameObject gameOver;
 
     private Vector2 movement;
     private bool gameover = false;
@@ -88,6 +89,7 @@ public class Snake : MonoBehaviour
     {
         gameover = true;
         scoreboard.UpdateHighScore();
+        gameOver.SetActive(true);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
